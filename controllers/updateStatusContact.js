@@ -1,8 +1,8 @@
 const { Contact, schemas } = require("../models/contact");
 const RequestError = require("../helpers/RequestError");
 
-const updateById = async (req, res) => {
-  const { error } = schemas.addSchema.validate(req.body);
+const updateStatusContact = async (req, res) => {
+  const { error } = schemas.updateFavoriteSchema.validate(req.body);
   if (error) {
     throw RequestError("400", "missing required name field");
   }
@@ -16,4 +16,4 @@ const updateById = async (req, res) => {
   res.status(200).json(result);
 };
 
-module.exports = updateById;
+module.exports = updateStatusContact;
