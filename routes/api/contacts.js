@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controllers = require("../../controllers/index");
 const ctrlWrapper = require("../../helpers/ctrlWraper");
-const { isValidId } = require("../../middlewares");
+const { isValidId } = require("../../middlewares/index");
 
 router.get("/", controllers.getAll);
 
@@ -17,7 +17,7 @@ router.put("/:contactId", isValidId, ctrlWrapper(controllers.updateById));
 router.patch(
   "/:contactId/favorite",
   isValidId,
-  ctrlWrapper(controllers.updateStatusContact)
+  ctrlWrapper(controllers.updateStatus)
 );
 
 module.exports = router;

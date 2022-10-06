@@ -1,4 +1,5 @@
-const { Contact, schemas } = require("../models/contact");
+const { schemas } = require("../service/schemas/contactSchemas");
+const { updateContact } = require("../service/index");
 const RequestError = require("../helpers/RequestError");
 
 const updateById = async (req, res) => {
@@ -7,9 +8,7 @@ const updateById = async (req, res) => {
     throw RequestError("400", "missing required name field");
   }
   const { contactId } = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
-    new: true,
-  });
+  const result = await updateContact(contactId, req.body);
   if (!result) {
     throw RequestError("404", "Not found");
   }
