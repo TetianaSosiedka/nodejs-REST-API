@@ -1,5 +1,5 @@
-const { getContactById } = require("../service/index");
-const RequestError = require("../helpers/RequestError");
+const { getContactById } = require("../../service/contacts");
+const { RequestError } = require("../../helpers");
 
 const getById = async (req, res) => {
   const { contactId } = req.params;

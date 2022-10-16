@@ -1,4 +1,4 @@
-const { Contact } = require("./schemas/contactSchemas");
+const { Contact } = require("../schemas/contact");
 
 const addContact = (data) => {
   return Contact.create(data);

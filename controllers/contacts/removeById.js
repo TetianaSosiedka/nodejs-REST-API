@@ -1,5 +1,5 @@
-const { removeContact } = require("../service/index");
-const RequestError = require("../helpers/RequestError");
+const { removeContact } = require("../../service/contacts");
+const { RequestError } = require("../../helpers/");
 
 const removeById = async (req, res) => {
   const { contactId } = req.params;
