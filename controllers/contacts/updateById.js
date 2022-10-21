@@ -1,9 +1,9 @@
-const { updateContact } = require("../../service/contacts");
+const service = require("../../service/contacts");
 const { RequestError } = require("../../helpers");
 
 const updateById = async (req, res) => {
   const { contactId } = req.params;
-  const result = await updateContact(contactId, req.body);
+  const result = await service.updateContact(contactId, req.body);
   if (!result) {
     throw RequestError("404", "Not found");
   }
