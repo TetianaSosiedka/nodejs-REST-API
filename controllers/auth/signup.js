@@ -1,14 +1,12 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
+const { nanoid } = require("nanoid");
 
-const { RequestError } = require("../../helpers");
+const { RequestError, sendEmail, templateEmail } = require("../../helpers");
 
 const service = require("../../service/users");
 
 const signup = async (req, res) => {
-  const { SECRET_KEY } = process.env;
-
   const { password, email, subscription } = req.body;
   const user = await service.findUser(email);
   if (user) {
@@ -16,21 +14,19 @@ const signup = async (req, res) => {
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
+  const verificationToken = nanoid();
 
   const result = await service.addUser({
     password: hashPassword,
     email,
     subscription,
     avatarURL,
+    verificationToken,
   });
 
-  const payload = {
-    id: result._id,
-  };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+  const verifyEmail = templateEmail(verificationToken, email);
 
-  await service.loginUser(result._id, token);
-  console.log(result);
+  await sendEmail(verifyEmail);
 
   res.status(201).json({
     user: {
